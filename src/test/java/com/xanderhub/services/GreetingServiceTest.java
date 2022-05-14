@@ -19,7 +19,7 @@ class GreetingServiceTest {
 
     @Test
     void greet() {
-        GreetingService greetingService = new GreetingService(DispatchBy.CONSOLE);
+        GreetingService greetingService = new GreetingService(DispatchTo.CONSOLE);
         greetingService.greet();
 
         assertTrue(outContent.toString().contains("Hello"));

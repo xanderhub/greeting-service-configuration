@@ -1,6 +1,6 @@
 package com.xanderhub.services;
 
-public enum DispatchBy {
+public enum DispatchTo {
     CONSOLE,
     FILE
 }
