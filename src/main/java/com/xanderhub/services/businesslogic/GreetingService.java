@@ -1,9 +1,5 @@
 package com.xanderhub.services.businesslogic;
 
-import lombok.SneakyThrows;
-
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
 
 public class GreetingService {
@@ -23,14 +19,5 @@ public class GreetingService {
         String translatedGreeting = translatedGreetings.getOrDefault(userInfo.getUserLanguage(), "Hello");
         // Dispatch greeting message
         greetingDispatcher.dispatch(translatedGreeting + " " + userInfo.getUserName());
-    }
-
-    private void dispatchByConsole(String greeting) {
-        System.out.println(greeting);
-    }
-
-    @SneakyThrows
-    private void dispatchByFile(String greeting) {
-        Files.write(Paths.get("greeting.txt"), greeting.getBytes());
     }
 }
