@@ -4,21 +4,13 @@ import com.xanderhub.services.businesslogic.UserInfo;
 
 public class SystemEnvironmentUserInfo implements UserInfo {
 
-    private final String userName;
-    private final String userLanguage;
-
-    public SystemEnvironmentUserInfo() {
-        userLanguage = System.getProperty("user.language");
-        userName = System.getProperty("user.name");
-    }
-
     @Override
     public String getUserName() {
-        return userName;
+        return System.getProperty("user.language");
     }
 
     @Override
     public String getUserLanguage() {
-        return userLanguage;
+        return System.getProperty("user.name");
     }
 }
