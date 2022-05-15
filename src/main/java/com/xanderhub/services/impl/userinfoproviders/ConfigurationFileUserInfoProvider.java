@@ -1,14 +1,14 @@
-package com.xanderhub.services.configuration;
+package com.xanderhub.services.impl.userinfoproviders;
 
-import com.xanderhub.services.businesslogic.UserInfo;
+import com.xanderhub.services.businesslogic.UserInfoProvider;
 
 import java.util.Properties;
 
-public class ConfigurationFileUserInfo implements UserInfo {
+public class ConfigurationFileUserInfoProvider implements UserInfoProvider {
 
     private final Properties applicationProperties;
 
-    public ConfigurationFileUserInfo(Properties applicationProperties) {
+    public ConfigurationFileUserInfoProvider(Properties applicationProperties) {
         this.applicationProperties = applicationProperties;
     }
 

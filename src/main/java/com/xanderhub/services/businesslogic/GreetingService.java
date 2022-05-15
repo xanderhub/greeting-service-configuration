@@ -1,23 +1,23 @@
 package com.xanderhub.services.businesslogic;
 
-import java.util.Map;
-
 public class GreetingService {
 
-    private final Map<String, String> translatedGreetings;
+    private final GreetingGenerator greetingGenerator;
+    private final UserInfoProvider userInfoProvider;
     private final GreetingDispatcher greetingDispatcher;
-    private final UserInfo userInfo;
 
-    public GreetingService(Map<String, String> translatedGreetings, UserInfo userInfo, GreetingDispatcher greetingDispatcher) {
-        this.translatedGreetings = translatedGreetings;
-        this.userInfo = userInfo;
+
+    public GreetingService(GreetingGenerator greetingGenerator, UserInfoProvider userInfoProvider, GreetingDispatcher greetingDispatcher) {
+        this.greetingGenerator = greetingGenerator;
+        this.userInfoProvider = userInfoProvider;
         this.greetingDispatcher = greetingDispatcher;
     }
 
     public void greet() {
         // Create greeting message based on user info
-        String translatedGreeting = translatedGreetings.getOrDefault(userInfo.getUserLanguage(), "Hello");
+        String greeting = greetingGenerator.generate(userInfoProvider);
+
         // Dispatch greeting message
-        greetingDispatcher.dispatch(translatedGreeting + " " + userInfo.getUserName());
+        greetingDispatcher.dispatch(greeting);
     }
 }

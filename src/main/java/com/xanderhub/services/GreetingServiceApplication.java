@@ -1,11 +1,11 @@
 package com.xanderhub.services;
 
 import com.xanderhub.services.businesslogic.GreetingService;
-import com.xanderhub.services.businesslogic.UserInfo;
-import com.xanderhub.services.configuration.ConfigurationFileUserInfo;
-import com.xanderhub.services.configuration.ConsoleGreetingDispatcher;
-import com.xanderhub.services.configuration.FileGreetingDispatcher;
-import com.xanderhub.services.configuration.SystemEnvironmentUserInfo;
+import com.xanderhub.services.impl.greetinggenerators.InternationalGreetingGenerator;
+import com.xanderhub.services.businesslogic.UserInfoProvider;
+import com.xanderhub.services.impl.userinfoproviders.ConfigurationFileUserInfoProvider;
+import com.xanderhub.services.impl.dispatchers.ConsoleGreetingDispatcher;
+import com.xanderhub.services.impl.userinfoproviders.SystemEnvironmentUserInfoProvider;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,19 +23,23 @@ public class GreetingServiceApplication {
                 new AbstractMap.SimpleEntry<>("it", "Ciao"),
                 new AbstractMap.SimpleEntry<>("he", "שלום"));
 
-        UserInfo userInfo;
+        UserInfoProvider userInfoProvider;
         Properties applicationProperties = loadApplicationProperties();
 
         if (applicationProperties == null
                 || applicationProperties.getProperty("app.userinfo.username") == null
                 || applicationProperties.getProperty("app.userinfo.userlanguage") == null) {
 
-            userInfo = new SystemEnvironmentUserInfo();
+            userInfoProvider = new SystemEnvironmentUserInfoProvider();
         } else {
-            userInfo = new ConfigurationFileUserInfo(applicationProperties);
+            userInfoProvider = new ConfigurationFileUserInfoProvider(applicationProperties);
         }
 
-        GreetingService greetingService = new GreetingService (translatedGreetings, userInfo, new ConsoleGreetingDispatcher());
+        GreetingService greetingService = new GreetingService(
+                new InternationalGreetingGenerator(translatedGreetings),
+                userInfoProvider,
+                new ConsoleGreetingDispatcher());
+
         greetingService.greet();
     }
 

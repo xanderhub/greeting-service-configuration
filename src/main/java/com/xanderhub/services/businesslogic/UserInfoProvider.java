@@ -1,6 +1,6 @@
 package com.xanderhub.services.businesslogic;
 
-public interface UserInfo {
+public interface UserInfoProvider {
     String getUserName();
     String getUserLanguage();
 }

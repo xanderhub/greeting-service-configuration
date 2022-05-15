@@ -1,4 +1,4 @@
-package com.xanderhub.services.configuration;
+package com.xanderhub.services.impl.dispatchers;
 
 import com.xanderhub.services.businesslogic.GreetingDispatcher;
 
