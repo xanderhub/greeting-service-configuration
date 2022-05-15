@@ -1,5 +1,8 @@
 package com.xanderhub.services.businesslogic;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class GreetingService {
 
     private final GreetingGenerator greetingGenerator;

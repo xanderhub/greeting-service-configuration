@@ -1,59 +1,20 @@
 package com.xanderhub.services;
 
 import com.xanderhub.services.businesslogic.GreetingService;
-import com.xanderhub.services.impl.greetinggenerators.InternationalGreetingGenerator;
-import com.xanderhub.services.businesslogic.UserInfoProvider;
-import com.xanderhub.services.impl.userinfoproviders.ConfigurationFileUserInfoProvider;
-import com.xanderhub.services.impl.dispatchers.ConsoleGreetingDispatcher;
-import com.xanderhub.services.impl.userinfoproviders.SystemEnvironmentUserInfoProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.AbstractMap;
-import java.util.Map;
-import java.util.Properties;
-
+@SpringBootApplication
 public class GreetingServiceApplication {
 
-    public static void main(String[] args) {
-
-        Map<String, String> translatedGreetings = Map.ofEntries(
-                new AbstractMap.SimpleEntry<>("en", "Hello"),
-                new AbstractMap.SimpleEntry<>("it", "Ciao"),
-                new AbstractMap.SimpleEntry<>("he", "שלום"));
-
-        UserInfoProvider userInfoProvider;
-        Properties applicationProperties = loadApplicationProperties();
-
-        if (applicationProperties == null
-                || applicationProperties.getProperty("app.userinfo.username") == null
-                || applicationProperties.getProperty("app.userinfo.userlanguage") == null) {
-
-            userInfoProvider = new SystemEnvironmentUserInfoProvider();
-        } else {
-            userInfoProvider = new ConfigurationFileUserInfoProvider(applicationProperties);
-        }
-
-        GreetingService greetingService = new GreetingService(
-                new InternationalGreetingGenerator(translatedGreetings),
-                userInfoProvider,
-                new ConsoleGreetingDispatcher());
-
+    @Autowired
+    public GreetingServiceApplication(GreetingService greetingService) {
         greetingService.greet();
     }
 
-    private static Properties loadApplicationProperties() {
-        try (InputStream input = new FileInputStream("src/main/resources/application.properties")) {
-            Properties properties = new Properties();
-            // load a properties file
-            properties.load(input);
-            return properties;
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
+    public static void main(String[] args) {
+        SpringApplication.run(GreetingServiceApplication.class, args);
     }
 }
+
