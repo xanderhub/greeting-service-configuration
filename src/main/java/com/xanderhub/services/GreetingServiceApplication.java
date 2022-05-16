@@ -18,10 +18,7 @@ public class GreetingServiceApplication {
 
     public static void main(String[] args) {
 
-        Map<String, String> translatedGreetings = Map.ofEntries(
-                new AbstractMap.SimpleEntry<>("en", "Hello"),
-                new AbstractMap.SimpleEntry<>("it", "Ciao"),
-                new AbstractMap.SimpleEntry<>("he", "שלום"));
+        Map<String, String> translatedGreetings = Map.of("en", "Hello","it", "Ciao","he", "שלום");
 
         UserInfoProvider userInfoProvider;
         Properties applicationProperties = loadApplicationProperties();
